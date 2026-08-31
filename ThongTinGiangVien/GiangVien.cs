@@ -37,17 +37,17 @@ namespace ThongTinGiangVien
         public override string ToString()
         {
             string s = "Mã số: " + MaSo + "\n"
-                + "Họ tên:" + HoTen + "\n"
-                + "Ngày sinh:" + NgaySinh + "\n"
-                + "Giới tính:" + GioiTinh + "\n"
-                + "Số ĐT:" + SoDT + "\n"
-                + "Mail:" + Mail + "\n";
+                + "Họ tên: " + HoTen + "\n"
+                + "Ngày sinh: " + NgaySinh + "\n"
+                + "Giới tính: " + GioiTinh + "\n"
+                + "Số ĐT: " + SoDT + "\n"
+                + "Mail: " + Mail + "\n";
             string sngoaingu = "Ngoại ngữ: ";
             foreach (string t in NgoaiNgu)
-                sngoaingu += t + ";";
+                sngoaingu += t + "; ";
             string monDay = "Danh sách môn dạy: ";
             foreach(HocPhan hp in dsHocPhan.ds)
-                monDay += hp + ";";
+                monDay += hp + "; ";
             s += "\n" + sngoaingu + "\n" + monDay;
             return s;
         }

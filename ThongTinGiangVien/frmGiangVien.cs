@@ -13,9 +13,11 @@ namespace ThongTinGiangVien
 {
     public partial class frmGiangVien : Form
     {
+        QuanLyGiangVien qlgv = new QuanLyGiangVien();
         public frmGiangVien()
         {
             InitializeComponent();
+            qlgv.DocFile("DSGV.txt");
         }
 
         private void frmGiangVien_Load(object sender, EventArgs e)
@@ -112,6 +114,56 @@ namespace ThongTinGiangVien
         private void btnExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            string maso = cboMaSo.Text;
+            foreach (GiangVien gvien in qlgv.dsgv)
+            {
+                if (gvien.MaSo == maso)
+                {
+                    MessageBox.Show("Mã giảng viên đã tồn tại !", "Thông báo lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            string[] ngoaingu = new string[30];
+            int i = 0;
+            foreach(object item in chklbNgoaiNgu.CheckedItems)
+            {
+                ngoaingu[i] = item.ToString();
+                i++;
+            }
+
+            DanhMucHocPhan dshp = new DanhMucHocPhan();
+            foreach(object item in lbHocPhanDay.Items)
+            {
+                HocPhan hp = new HocPhan(item.ToString());
+                dshp.Them(hp);
+            }
+
+            GiangVien gv = new GiangVien
+                (
+                maso,
+                mtxtSoDT.Text,
+                txtMail.Text,
+                txtHoTen.Text,
+                dtpNgaySinh.Value,
+                dshp,
+                rdNam.Checked ? "Nam" : "Nữ",
+                ngoaingu
+                );
+            qlgv.Them(gv);
+            qlgv.GhiFile("DSGV.txt");
+            MessageBox.Show("Thêm giảng viên thành công !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
+        private void btnTim_Click(object sender, EventArgs e)
+        {
+            frmTimGV form = new frmTimGV(qlgv);
+            form.ShowDialog();
         }
     }
 }
