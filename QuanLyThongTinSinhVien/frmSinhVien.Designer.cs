@@ -183,6 +183,7 @@
             this.btnThem.TabIndex = 11;
             this.btnThem.Text = "Thêm";
             this.btnThem.UseVisualStyleBackColor = true;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // pbHinh
             // 
@@ -205,6 +206,7 @@
             this.btnBrowse.TabIndex = 9;
             this.btnBrowse.Text = "...";
             this.btnBrowse.UseVisualStyleBackColor = false;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // pnlSex
             // 

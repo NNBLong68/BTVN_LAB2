@@ -17,6 +17,7 @@ namespace QuanLyThongTinSinhVien
         {
             InitializeComponent();
         }
+
         QuanLySinhVien qlsv;
         private void ThemSV(SinhVien sv)
         {
@@ -95,11 +96,49 @@ namespace QuanLyThongTinSinhVien
             this.txtDiaChi.Text = sv.DiaChi;
             this.cbLop.Text = sv.Lop;
             this.txtHinh.Text = sv.Hinh;
-            //this.pbHinh.ImageLocation = sv.Hinh -- nếu hình nằm trong debug
+            //this.pbHinh.ImageLocation = sv.Hinh; //-- nếu hình nằm trong debug
 
             //sửa code do hình trong \Debug\Images
-            string duongDan = Path.Combine(Application.StartupPath,"Images",sv.Hinh);
-            this.pbHinh.Image = Image.FromFile(duongDan);
+            //string duongDan = Path.Combine(Application.StartupPath,sv.Hinh);
+            //this.pbHinh.Image = Image.FromFile(duongDan);
+            string duongDan = "";
+
+            // Trường hợp sv.Hinh là đường dẫn đầy đủ
+            if (Path.IsPathRooted(sv.Hinh) && File.Exists(sv.Hinh))
+            {
+                duongDan = sv.Hinh;
+                //IsPathRooted: kiểm tra đường dẫn đã đầy đủ chưa
+            }
+            else
+            {
+                // 1. Tìm trực tiếp trong Debug
+                string duongDanDebug = Path.Combine(Application.StartupPath,sv.Hinh);
+
+                //Application.StartupPath: lấy đường dẫn đến thư mục mà chương trình đang chạy
+                //Path Combine: ghép 2 đường dẫn lại với nhau
+
+                // 2. Tìm trong Debug\Images
+                string duongDanImages = Path.Combine(Application.StartupPath,"Images",sv.Hinh);
+
+                if (File.Exists(duongDanDebug))
+                {
+                    duongDan = duongDanDebug;
+                }
+                else if (File.Exists(duongDanImages))
+                {
+                    duongDan = duongDanImages;
+                }
+            }
+
+            if (duongDan != "")
+            {
+                this.pbHinh.Image = Image.FromFile(duongDan);
+            }
+            else
+            {
+                this.pbHinh.Image = null;
+            }
+
 
             if (sv.GioiTinh)
                 this.rdNam.Checked = true;
@@ -167,6 +206,8 @@ namespace QuanLyThongTinSinhVien
             }
             this.LoadListView();
             this.btnMacDinh.PerformClick();
+
+            qlsv.GhiFile("DanhSachSV.txt");
         }
 
         private void btnSua_Click(object sender, EventArgs e)
@@ -176,6 +217,45 @@ namespace QuanLyThongTinSinhVien
             kq = qlsv.Sua(sv, sv.MaSo, SoSanhTheoMa);
             if (kq)
                 this.LoadListView();
+        }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog(); //hộp thoại chọn file
+            open.Filter = "Image File (*.bmp;*.jpg;*.png)|*.bmp;*.jpg;*.png|All File (*.*)|*.*";
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                string thuMucImages = Path.Combine(Application.StartupPath, "Images");
+
+                // Nếu chưa có thư mục Images thì tạo
+                if (!Directory.Exists(thuMucImages))
+                    Directory.CreateDirectory(thuMucImages);
+
+                // Lấy tên file ảnh
+                string tenFile = Path.GetFileName(open.FileName);
+
+                // Đường dẫn đích: Debug\Images\tênảnh
+                string duongDanDich = Path.Combine(thuMucImages, tenFile);
+
+                // Copy ảnh vào Debug\Images
+                File.Copy(open.FileName, duongDanDich, true);
+
+                // Hiển thị ảnh
+                pbHinh.Image = Image.FromFile(duongDanDich);
+
+                // Chỉ lưu tên ảnh
+                txtHinh.Text = tenFile;
+            }
+        }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            SinhVien sv = GetSinhVien();
+            qlsv.Them(sv);
+            qlsv.GhiFile("DanhSachSV.txt");
+
+            LoadListView();
+            MessageBox.Show("Thêm thành công !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

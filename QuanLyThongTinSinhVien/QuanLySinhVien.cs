@@ -92,5 +92,34 @@ namespace QuanLyThongTinSinhVien
                 }
             }
         }
+
+
+        public void GhiFile(string filename)
+        {
+            using (StreamWriter sw = new StreamWriter(filename))
+            {
+                foreach(SinhVien sv in dsSinhVien)
+                {
+                    string gt = sv.GioiTinh ? "1" : "0";
+                    string cn = "";
+
+                    foreach (string s in sv.ChuyenNganh)
+                        cn += s + ",";
+
+                    if(cn.Length > 0)
+                        cn = cn.Substring(0, cn.Length - 1);
+
+                    sw.WriteLine(
+                        sv.MaSo + "\t" +
+                        sv.HoTen + "\t" +
+                        sv.NgaySinh.ToString() + "\t" +
+                        sv.DiaChi + "\t" +
+                        sv.Lop + "\t" +
+                        sv.Hinh + "\t" +
+                        gt + "\t" +
+                        cn);
+                }
+            }
+        }
     }
 }
