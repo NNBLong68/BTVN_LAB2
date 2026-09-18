@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.8.34408.163
+# Visual Studio Version 18
+VisualStudioVersion = 18.8.12023.21 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2411876_NguyenNguyenBaoLong_Lab02_MyForm", "2411876_NguyenNguyenBaoLong_Lab02\2411876_NguyenNguyenBaoLong_Lab02_MyForm.csproj", "{F374CADB-47D7-4E07-922A-2C0E8D54D4AA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThongTinGiangVien", "ThongTinGiangVien\ThongTinGiangVien.csproj", "{E1603DFF-839E-49C5-9EA4-C7AD84BB58D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuanLyThongTinSinhVien", "QuanLyThongTinSinhVien\QuanLyThongTinSinhVien.csproj", "{1DCBC5E0-B28C-416C-9046-2D7532376EF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaiTap3_QLSV_CNTT", "BaiTap3_QLSV_CNTT\BaiTap3_QLSV_CNTT.csproj", "{7630E802-8B75-4DB4-A1E5-CA336C1B4971}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{1DCBC5E0-B28C-416C-9046-2D7532376EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DCBC5E0-B28C-416C-9046-2D7532376EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DCBC5E0-B28C-416C-9046-2D7532376EF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7630E802-8B75-4DB4-A1E5-CA336C1B4971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7630E802-8B75-4DB4-A1E5-CA336C1B4971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7630E802-8B75-4DB4-A1E5-CA336C1B4971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7630E802-8B75-4DB4-A1E5-CA336C1B4971}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

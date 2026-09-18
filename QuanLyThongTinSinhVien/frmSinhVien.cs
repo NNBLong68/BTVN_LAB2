@@ -40,10 +40,10 @@ namespace QuanLyThongTinSinhVien
             lvitem.SubItems.Add(sv.Hinh);
             this.lvSinhVien.Items.Add(lvitem);
         }
-        private void LoadListView()
+        public void LoadListView(QuanLySinhVien ql)
         {
             this.lvSinhVien.Items.Clear();
-            foreach (SinhVien sv in qlsv.dsSinhVien)
+            foreach (SinhVien sv in ql.dsSinhVien)
                 ThemSV(sv);
         }
 
@@ -156,7 +156,7 @@ namespace QuanLyThongTinSinhVien
         {
             qlsv = new QuanLySinhVien();
             qlsv.DocTuFile("DanhSachSV.txt");
-            LoadListView();
+            LoadListView(qlsv);
         }
 
         private void lvSinhVien_SelectedIndexChanged(object sender, EventArgs e)
@@ -204,7 +204,7 @@ namespace QuanLyThongTinSinhVien
                 if (lvitem.Checked)
                     qlsv.Xoa(lvitem.SubItems[0].Text, SoSanhTheoMa);
             }
-            this.LoadListView();
+            this.LoadListView(qlsv);
             this.btnMacDinh.PerformClick();
 
             qlsv.GhiFile("DanhSachSV.txt");
@@ -213,10 +213,16 @@ namespace QuanLyThongTinSinhVien
         private void btnSua_Click(object sender, EventArgs e)
         {
             SinhVien sv = GetSinhVien();
+            Console.WriteLine(sv.MaSo);
             bool kq;
             kq = qlsv.Sua(sv, sv.MaSo, SoSanhTheoMa);
             if (kq)
-                this.LoadListView();
+            {
+                this.LoadListView(qlsv);
+                MessageBox.Show("Sửa thành công", "Thông báo");
+            }
+            else
+                MessageBox.Show("Sửa thất bại");
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -254,8 +260,86 @@ namespace QuanLyThongTinSinhVien
             qlsv.Them(sv);
             qlsv.GhiFile("DanhSachSV.txt");
 
-            LoadListView();
+            LoadListView(qlsv);
             MessageBox.Show("Thêm thành công !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void mởFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnBrowse.PerformClick();
+        }
+
+        private void thoátToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnThoat.PerformClick();
+        }
+
+        private void thêmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnThem_Click(sender, e);
+        }
+
+        private void xóaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnXoa_Click(sender, e);
+        }
+
+        private void sửaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            btnSua_Click(sender, e);
+        }
+
+        private void sắpXếpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frnTuyChinh form = new frnTuyChinh(this, qlsv);
+            form.ShowDialog();
+        }
+
+        public void SapXepTheoMa()
+        {
+            qlsv.dsSinhVien = qlsv.dsSinhVien.OrderBy(sv => sv.MaSo).ToList();
+        }
+
+        public void SapXepTheoTen()
+        {
+            qlsv.dsSinhVien = qlsv.dsSinhVien.OrderBy(sv => sv.HoTen).ToList();
+        }
+
+        public void SapXepTheoNgaySinh()
+        {
+            qlsv.dsSinhVien = qlsv.dsSinhVien.OrderBy(sv => sv.NgaySinh).ToList();
+        }
+
+        private void đỏToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lvSinhVien.ForeColor = Color.Red;
+        }
+
+        private void xanhToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lvSinhVien.ForeColor = Color.Blue;
+        }
+
+        private void mặcĐịnhToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lvSinhVien.ForeColor = Color.Black;
+        }
+
+        private void mặcĐịnhToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            lvSinhVien.Font = new Font("Times New Roman", 12, FontStyle.Regular);
+        }
+
+        private void arialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lvSinhVien.Font = new Font("Arial", 12, FontStyle.Regular);
+        }
+
+
+        private void tìmKiếmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frnTuyChinh form = new frnTuyChinh(this, qlsv);
+            form.ShowDialog();
         }
     }
 }

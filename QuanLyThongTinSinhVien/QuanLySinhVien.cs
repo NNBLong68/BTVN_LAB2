@@ -43,7 +43,7 @@ namespace QuanLyThongTinSinhVien
             int i, count;
             bool kq = false;
             count = this.dsSinhVien.Count - 1;
-            for(i = 0; i<count; i++)
+            for(i = 0; i<=count; i++)
             {
                 if(ss(obj, this[i]) == 0)
                 {
